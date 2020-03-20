@@ -20,7 +20,7 @@
     (is (= bad-result ((wrap-http-response bad) request)))
     (is (= bad-result ((wrap-http-response bad!) request))))
 
-  (testing "only response-exceptions are caugh"
+  (testing "only response-exceptions are caught"
     (is (thrown? Exception ((wrap-http-response failing) request)))))
 
 (def bad-async (fn [_ respond _] (respond (bad-request "BAD"))))
@@ -43,6 +43,6 @@
       ((wrap-http-response bad-async!) request respond raise)
       (is (= bad-result @respond))))
 
-  (testing "only response-exceptions are caugh"
+  (testing "only response-exceptions are caught"
     (let [respond (promise), raise (promise)]
       (is (thrown? Exception ((wrap-http-response failing) request respond raise))))))
